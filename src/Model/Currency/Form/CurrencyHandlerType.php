@@ -10,6 +10,10 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Форма для добавление курса валют
+ * @package App\Form
+ */
 class CurrencyHandlerType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)

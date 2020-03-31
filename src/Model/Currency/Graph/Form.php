@@ -11,6 +11,10 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Форма для построения графика
+ * @package App\Model\Currency\Graph
+ */
 class Form extends AbstractType
 {
     private $cr;

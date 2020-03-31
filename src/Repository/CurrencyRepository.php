@@ -54,6 +54,14 @@ class CurrencyRepository extends ServiceEntityRepository
         ;
     }
     */
+    /**
+     * Получение данных для графика
+     *
+     * @param string $numCode
+     * @param \DateTimeInterface $dateFrom
+     * @param \DateTimeInterface $dateTill
+     * @return mixed
+     */
     public function getGraph(string $numCode, \DateTimeInterface $dateFrom, \DateTimeInterface $dateTill)
     {
         return $this->createQueryBuilder('c')
@@ -66,6 +74,12 @@ class CurrencyRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * Получение кодов валют для вывода формы списка.
+     * Используется в фильтре
+     *
+     * @return array
+     */
     public function findNumCodes(): array
     {
         return $this->createQueryBuilder('c')
@@ -77,6 +91,14 @@ class CurrencyRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * Вывод списка валют с пагинацией и сортировкой
+     *
+     * @param Filter\Filter $filter
+     * @param int $page
+     * @param int $size
+     * @return PaginationInterface
+     */
     public function all(Filter\Filter $filter, int $page, int $size): PaginationInterface
     {
         $qb = $this->createQueryBuilder('c');
@@ -99,6 +121,12 @@ class CurrencyRepository extends ServiceEntityRepository
         ]);
     }
 
+    /**
+     * Получение данных за период времени определенной валюты
+     *
+     * @param Graph\Filter $filter
+     * @return array
+     */
     public function period(Graph\Filter $filter): array
     {
         $qb = $this->createQueryBuilder('c');

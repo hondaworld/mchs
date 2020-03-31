@@ -8,6 +8,10 @@ use App\Entity\Currency;
 use App\Repository\CurrencyRepository;
 use Doctrine\ORM\EntityManager;
 
+/**
+ * Класс для получения данных из XML файла и записи их в БД
+ * @package App\Handlers
+ */
 class CurrencyHandler
 {
     private $dateofadded;
