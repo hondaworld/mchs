@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Currency index{% endblock %}
+
+{% block body %}
+    <h1>Currency index</h1>
+    {{ form_start(form) }}
+    <div class="row py-2">
+        <div class="col">{{ form_widget(form.num_code) }}</div>
+        <div class="col">{{ form_widget(form.dateofadded) }}</div>
+        <div class="col"><button type="submit" class="btn btn-primary">Фильтровать</button></div>
+    </div>
+    <a href="{{ path('currency_graph') }}">График</a>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Num code</th>
+            <th>{{ knp_pagination_sortable(pagination, 'Char code', 'c.char_code') }}</th>
+            <th>Номинал</th>
+            <th>Наименование</th>
+            <th>Курс</th>
+            <th>{{ knp_pagination_sortable(pagination, 'Дата', 'c.dateofadded') }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for currency in pagination %}
+            <tr>
+                <td>{{ currency.valuteId }}</td>
+                <td>{{ currency.numCode }}</td>
+                <td>{{ currency.charCode }}</td>
+                <td>{{ currency.nominal }}</td>
+                <td>{{ currency.name }}</td>
+                <td>{{ currency.value }}</td>
+                <td>{{ currency.dateofadded ? currency.dateofadded|date('Y-m-d') : '' }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {{ form_end(form) }}
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+    <a href="{{ path('currency_new') }}">Create new</a>
+{% endblock %}

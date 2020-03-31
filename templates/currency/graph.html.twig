@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}График изменения валюты{% endblock %}
+
+{% block body %}
+    <h1>График изменения валюты</h1>
+
+    {{ form_start(form) }}
+    <div class="row py-2">
+        <div class="col">{{ form_widget(form.num_code) }}</div>
+        <div class="col">{{ form_widget(form.date_from) }}</div>
+        <div class="col">{{ form_widget(form.date_till) }}</div>
+        <div class="col">
+            <button type="submit" class="btn btn-primary">Показать</button>
+        </div>
+    </div>
+    {{ form_end(form) }}
+    <a href="{{ path('currency_index') }}">back to list</a>
+
+    {% if values %}
+        <div>
+            <canvas
+                    id="valuteChart"
+                    class="my-3"
+            >
+            </canvas>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css">
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+            <script>
+                var ctx = document.getElementById('valuteChart');
+                var myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: [
+                            {% for currency in values %}
+                            '{{ currency.dateofadded|date('Y-m-d') }}',
+                            {% endfor %}
+                        ],
+                        datasets: [{
+                            label: '{{ valute }}',
+                            data: [
+                                {% for currency in values %}
+                                '{{ currency.value * currency.nominal }}',
+                                {% endfor %}
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                }
+                            }]
+                        }
+                    }
+                });
+            </script>
+        </div>
+
+        <a class="btn btn-primary" href="{{ path('currency_json', {num_code: filter.num_code, date_from: filter.date_from|date('Y-m-d'), date_till: filter.date_till|date('Y-m-d')}) }}">JSON</a>
+    {% endif %}
+{% endblock %}
